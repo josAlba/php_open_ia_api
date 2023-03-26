@@ -1,0 +1,26 @@
+{
+    "name": "jos/open_ia_api",
+    "description": "Open IA API",
+    "autoload": {
+        "psr-4": {
+            "Jos\\OpenIaApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jos\\OpenIaApi\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jos alba"
+        }
+    ],
+    "require": {
+        "jms/serializer-bundle": "^5.2",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    }
+}
