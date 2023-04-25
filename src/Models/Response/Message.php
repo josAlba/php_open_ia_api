@@ -6,6 +6,7 @@ use Exception;
 use JMS\Serializer\Annotation;
 use JMS\Serializer\SerializerBuilder;
 use Jos\OpenIaApi\Models\AbstractModel;
+use RuntimeException;
 
 class Message extends AbstractModel
 {
@@ -95,12 +96,11 @@ class Message extends AbstractModel
 
     /**
      * @return string
-     * @throws Exception
      */
     public function __toString(): string
     {
         if (empty($this->choices)) {
-            throw new Exception('Message is empty');
+            throw new RuntimeException('Message is empty');
         }
 
         /** @var MessageChoices $message */

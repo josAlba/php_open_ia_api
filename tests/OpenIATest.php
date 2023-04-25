@@ -2,19 +2,15 @@
 
 namespace Jos\OpenIaApi\Tests;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Jos\OpenIaApi\Models\Request\Message;
-use Jos\OpenIaApi\Tests\Data\Client\Response;
-use Jos\OpenIaApi\Tests\Data\OpenIATestData;
-use PHPUnit\Framework\MockObject\Exception;
+use Jos\OpenIaApi\Tests\Data\OpenIA;
 use PHPUnit\Framework\TestCase;
 
 class OpenIATest extends TestCase
 {
     /**
      * @return void
-     * @throws Exception
      * @throws GuzzleException
      */
     public function testPost(): void
@@ -39,16 +35,14 @@ class OpenIATest extends TestCase
   }
 }
 json;
-        $client = $this->createMock(Client::class);
-        $response = new Response($bodyResponse);
-
-        $client->method('post')
-            ->willReturn($response);
-
-        $openIA = OpenIATestData::new($client);
+        $openIA = OpenIA::new($bodyResponse);
 
         $responsePost = $openIA->post(new Message('Hello!'));
 
-        $this->assertEquals('Hello there, how may I assist you today?', $responsePost->__toString());
+        $this->assertEquals(
+            'Hello there, how may I assist you today?',
+            $responsePost->__toString(),
+            'Response unexpected.'
+        );
     }
 }
