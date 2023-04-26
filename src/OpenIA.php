@@ -12,25 +12,39 @@ class OpenIA
 {
     private const URI_API_OPENAI_COM_V_1 = 'https://api.openai.com/v1/';
     private const URI_API_OPENAI_COM_V_1_CHAT_COMPLETIONS = 'chat/completions';
+    private const URI_API_OPENAI_COM_MODELS = 'models';
 
     protected ClientHttpInterface $client;
 
-    public function __construct(string $token, string $organization)
+    public function __construct(string $token, ?string $organization = null)
     {
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
+            'Content-Type' => 'application/json',
+        ];
+
+        if ($organization !== null) {
+            $headers['OpenAI-Organization'] = $organization;
+        }
+
         $this->client = new ClientHttp(
             self::URI_API_OPENAI_COM_V_1,
-            [
-                'Authorization' => 'Bearer '.$token,
-                'OpenAI-Organization' => $organization,
-            ]
+            $headers
         );
+    }
+
+    /**
+     * @return string
+     */
+    final public function getModels(): string
+    {
+        return $this->client->get(self::URI_API_OPENAI_COM_MODELS);
     }
 
     /**
      * @param MessageRequest $message
      *
      * @return MessageResponse
-     * @throws GuzzleException
      */
     final public function post(MessageRequest $message): MessageResponse
     {
@@ -43,7 +57,6 @@ class OpenIA
      * @param MessageRequest $message
      *
      * @return string
-     * @throws GuzzleException
      */
     public function postMessage(MessageRequest $message): string
     {

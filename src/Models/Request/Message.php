@@ -2,8 +2,8 @@
 
 namespace Jos\OpenIaApi\Models\Request;
 
-use Jos\OpenIaApi\Models\AbstractModel;
 use JMS\Serializer\Annotation;
+use Jos\OpenIaApi\Models\AbstractModel;
 
 class Message extends AbstractModel
 {
@@ -13,6 +13,13 @@ class Message extends AbstractModel
      * @Annotation\SerializedName("model")
      */
     private string $model = 'gpt-3.5-turbo';
+
+    /**
+     * @var float|null
+     * @Annotation\Type("string")
+     * @Annotation\SerializedName("temperature")
+     */
+    private ?float $temperature = null;
 
     /**
      * @var array<MessageMessage>
